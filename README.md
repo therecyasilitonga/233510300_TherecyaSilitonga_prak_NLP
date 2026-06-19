@@ -1,4 +1,4 @@
-# 🤖 Multi-Agent Research AI
+# Multi-Agent Research AI
 
 Sistem riset otomatis berbasis multi-agent yang mampu mencari, menganalisis, dan menyusun laporan riset hanya dari satu topik yang dimasukkan pengguna. Dibangun menggunakan empat agen AI yang bekerja secara berurutan — **Supervisor**, **Researcher**, **Analyst**, dan **Writer** — dengan model bahasa yang dijalankan secara lokal melalui **Ollama**, tanpa memerlukan API berbayar.
 
@@ -6,35 +6,35 @@ Sistem riset otomatis berbasis multi-agent yang mampu mencari, menganalisis, dan
 
 ---
 
-## 📑 Daftar Isi
+## Daftar Isi
 
-- [Tentang Aplikasi](#-tentang-aplikasi)
-- [Library dan Teknologi yang Digunakan](#-library-dan-teknologi-yang-digunakan)
-- [Struktur Proyek](#-struktur-proyek)
-- [Panduan Instalasi Step-by-Step](#-panduan-instalasi-step-by-step)
-- [Menjalankan Aplikasi](#-menjalankan-aplikasi)
-- [Cara Menggunakan Aplikasi](#-cara-menggunakan-aplikasi)
-- [Troubleshooting Umum](#-troubleshooting-umum)
-- [Identitas Pengembang](#-identitas-pengembang)
+- [Tentang Aplikasi](#tentang-aplikasi)
+- [Library dan Teknologi yang Digunakan](#library-dan-teknologi-yang-digunakan)
+- [Struktur Proyek](#struktur-proyek)
+- [Panduan Instalasi Step-by-Step](#panduan-instalasi-step-by-step)
+- [Menjalankan Aplikasi](#menjalankan-aplikasi)
+- [Cara Menggunakan Aplikasi](#cara-menggunakan-aplikasi)
+- [Troubleshooting Umum](#troubleshooting-umum)
+- [Identitas Pengembang](#identitas-pengembang)
 
 ---
 
-## 📖 Tentang Aplikasi
+## Tentang Aplikasi
 
 **Multi-Agent Research AI** adalah aplikasi web yang mengotomatisasi proses riset menggunakan pendekatan *multi-agent system*. Alih-alih mengandalkan satu prompt besar ke satu model untuk menghasilkan laporan riset, sistem ini membagi pekerjaan ke dalam empat agen yang masing-masing punya tanggung jawab spesifik:
 
 | Agen | Tugas |
 |---|---|
-| 🧭 **Supervisor** | Menerima topik dari pengguna dan menyusunnya menjadi rencana riset yang lebih terarah |
-| 🔍 **Researcher** | Mencari informasi dari internet menggunakan tool pencarian, berdasarkan rencana dari Supervisor |
-| 📊 **Analyst** | Menyaring dan menganalisis data mentah hasil pencarian untuk menemukan insight penting |
-| ✍️ **Writer** | Menyusun seluruh temuan menjadi laporan akhir yang rapi dan mudah dibaca |
+| **Supervisor** | Menerima topik dari pengguna dan menyusunnya menjadi rencana riset yang lebih terarah |
+| **Researcher** | Mencari informasi dari internet menggunakan tool pencarian, berdasarkan rencana dari Supervisor |
+| **Analyst** | Menyaring dan menganalisis data mentah hasil pencarian untuk menemukan insight penting |
+| **Writer** | Menyusun seluruh temuan menjadi laporan akhir yang rapi dan mudah dibaca |
 
 Keempat agen ini dijalankan secara **berurutan (sequential)** melalui graf kerja yang didefinisikan menggunakan LangGraph, dan seluruh prosesnya dapat dipantau secara real-time melalui antarmuka web berbasis Streamlit.
 
 ---
 
-## 🛠 Library dan Teknologi yang Digunakan
+## Library dan Teknologi yang Digunakan
 
 ### 1. LangChain
 LangChain adalah framework yang menyediakan komponen-komponen dasar untuk membangun aplikasi berbasis LLM. Dalam proyek ini, LangChain digunakan untuk:
@@ -42,38 +42,38 @@ LangChain adalah framework yang menyediakan komponen-komponen dasar untuk memban
 - `HumanMessage` — struktur standar untuk membungkus pesan/prompt yang dikirim ke model.
 - Penyusunan *prompt template* yang membentuk instruksi peran masing-masing agen.
 
-📦 Implementasi: seluruh file di dalam folder `agents/`
+Implementasi: seluruh file di dalam folder `agents/`
 
 ### 2. LangGraph
 LangGraph dibangun di atas LangChain dan berfungsi sebagai "pengatur lalu lintas" antar-agen. Komponen utama yang dipakai:
 - `StateGraph` — struktur graf yang mendefinisikan node (agen) dan urutan eksekusinya.
 - *Edge* — penghubung antar-node yang menentukan agen mana yang dijalankan setelah agen sebelumnya selesai.
 
-📦 Implementasi: `graph.py`
+Implementasi: `graph.py`
 
 ### 3. LangSmith
 LangSmith adalah platform observabilitas khusus aplikasi LLM. Dengan mengaktifkannya, setiap pemanggilan model oleh keempat agen akan tercatat secara otomatis — termasuk input, output, dan waktu eksekusi — sehingga memudahkan proses debugging dan evaluasi.
 
-📦 Implementasi: diaktifkan lewat variabel `LANGCHAIN_TRACING_V2=true` di file `.env`
+Implementasi: diaktifkan lewat variabel `LANGCHAIN_TRACING_V2=true` di file `.env`
 
 ### 4. Ollama
 Ollama adalah *runtime* yang memungkinkan model bahasa open-source dijalankan secara lokal di komputer, tanpa biaya API. Proyek ini menggunakan model **Llama 3.2 (3B parameter)** sebagai model utama yang menjalankan seluruh proses inferensi teks.
 
-📦 Implementasi: backend inferensi seluruh agen, dipanggil melalui `ChatOllama`
+Implementasi: backend inferensi seluruh agen, dipanggil melalui `ChatOllama`
 
 ### 5. Streamlit
 Streamlit adalah framework Python untuk membangun antarmuka web interaktif tanpa perlu menulis HTML/CSS/JS secara manual. Seluruh tampilan aplikasi — input topik, status agen real-time, hingga tab hasil riset — dibangun menggunakan Streamlit.
 
-📦 Implementasi: `app.py`
+Implementasi: `app.py`
 
 ### 6. DuckDuckGo Search
 Tool pencarian yang digunakan oleh Researcher Agent untuk mengambil data dari internet secara real-time, tanpa memerlukan API key berbayar seperti Google Search API.
 
-📦 Implementasi: `tools/search_tool.py`
+Implementasi: `tools/search_tool.py`
 
 ---
 
-## 📂 Struktur Proyek
+## Struktur Proyek
 
 ```
 multi_agent_research_ui/
@@ -94,7 +94,7 @@ multi_agent_research_ui/
 
 ---
 
-## 🚀 Panduan Instalasi Step-by-Step
+## Panduan Instalasi Step-by-Step
 
 ### Langkah 1 — Pastikan Prasyarat Sudah Terpasang
 
@@ -133,7 +133,7 @@ Tunggu proses unduhan selesai (ukuran model sekitar 2 GB, tergantung koneksi int
 ollama serve
 ```
 
-> ⚠️ **Penting:** Biarkan terminal ini tetap terbuka dan berjalan di latar belakang selama aplikasi digunakan. Jika ditutup, aplikasi tidak akan bisa terhubung ke model.
+> **Penting:** Biarkan terminal ini tetap terbuka dan berjalan di latar belakang selama aplikasi digunakan. Jika ditutup, aplikasi tidak akan bisa terhubung ke model.
 
 ### Langkah 6 — Buat Virtual Environment (Opsional, tapi disarankan)
 
@@ -180,7 +180,7 @@ Simpan file tersebut.
 
 ---
 
-## ▶️ Menjalankan Aplikasi
+## Menjalankan Aplikasi
 
 Pastikan **Ollama masih berjalan** (`ollama serve` masih aktif di terminal lain), lalu jalankan:
 
@@ -199,7 +199,7 @@ Browser akan terbuka secara otomatis. Jika tidak, salin alamat `http://localhost
 
 ---
 
-## 🎯 Cara Menggunakan Aplikasi
+## Cara Menggunakan Aplikasi
 
 1. **Atur konfigurasi** di sidebar kiri — pilih model Ollama, atur *temperature* (disarankan 0.3 untuk hasil yang lebih faktual), dan tentukan jumlah hasil pencarian.
 2. **Masukkan topik riset** pada kolom "Topik Riset", atau klik salah satu tombol "Topik cepat" yang sudah disediakan.
@@ -213,7 +213,7 @@ Browser akan terbuka secara otomatis. Jika tidak, salin alamat `http://localhost
 
 ---
 
-## 🔧 Troubleshooting Umum
+## Troubleshooting Umum
 
 | Masalah | Kemungkinan Sebab | Solusi |
 |---|---|---|
@@ -225,7 +225,7 @@ Browser akan terbuka secara otomatis. Jika tidak, salin alamat `http://localhost
 
 ---
 
-## 👩‍💻 Identitas Pengembang
+## Identitas Pengembang
 
 **Nama:** Therecya Silitonga
 **NPM:** 233510300
