@@ -1,6 +1,7 @@
 # Multi-Agent Research AI
 
 Sistem riset otomatis berbasis multi-agent yang mampu mencari, menganalisis, dan menyusun laporan riset hanya dari satu topik yang dimasukkan pengguna. Dibangun menggunakan empat agen AI yang bekerja secara berurutan — **Supervisor**, **Researcher**, **Analyst**, dan **Writer** — dengan model bahasa yang dijalankan secara lokal melalui **Ollama**, tanpa memerlukan API berbayar.
+<img width="1527" height="784" alt="image" src="https://github.com/user-attachments/assets/50a56fc9-f0d9-4f5c-903e-f55d5be28427" />
 
 > Proyek ini disusun untuk pemenuhan tugas akhir (UAS) mata kuliah Natural Language Processing / Large Language Model, Program Studi Teknik Informatika, Universitas Islam Riau.
 
